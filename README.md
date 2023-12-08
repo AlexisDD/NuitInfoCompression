@@ -106,8 +106,8 @@ Ensuite, l'application est automatiquement déployée sur les ports suivants:
 
 Si vous ne souhaitez pas utiliser Docker, vous pouvez installer les composants manuellement. L'installation manuelle est plus longue mais permet d'utiliser les ressources GPU de la machine hôte pour la compression des vidéos.
 
-1. Installer [Node.js](https://nodejs.org/en/)
-2. Installer [FFmpeg](https://ffmpeg.org/)
+1. Installer [Node.js](https://nodejs.org/en/) 
+2. Installer [FFmpeg](https://ffmpeg.org/) (sous Windows, avec la commande `winget install ffmpeg`)
 3. Installer les dépendances du composant Backend :
     ```bash
     cd backend

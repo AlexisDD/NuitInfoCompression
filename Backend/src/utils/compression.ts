@@ -46,7 +46,7 @@ function compressImage(filePath: string, maximumSize: number): Promise<string> {
     const fileName = filePath.split('/').pop();
 
     if (!fs.existsSync(outputPath)) {
-        fs.mkdirSync(outputPath);
+        fs.mkdirSync(outputPath, { recursive: true });
     }
     const outputFilePath = `${outputPath}/${fileName}_compressed.avif`;
 
@@ -94,7 +94,7 @@ function compressVideo(filePath: string, maximumSize: number): Promise<string> {
     const fileName = filePath.split('/').pop();
     
     if (!fs.existsSync(outputPath)) {
-        fs.mkdirSync(outputPath);
+        fs.mkdirSync(outputPath, { recursive: true });
     }
     const outputFilePath = `${outputPath}/${fileName}_compressed.mp4`;
 
