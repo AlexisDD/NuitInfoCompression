@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mongo:
+      container_name: mongo-nuitinfo
+      image: mongo:latest
+      volumes:
+        - "./db:/data/db"
+      ports: 
+        - "27017:27017"
+
+  backend:
+    container_name: backend-nuitinfo
+    image: backend-nuitinfo
+    build:
+      context: Backend
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
+      LOG_LEVEL: ${LOG_LEVEL}
+      MONGO_URI: mongodb://mongo-nuitinfo:27017/nuitinfo
+      TZ: Europe/Paris
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    links:
+      - mongo
+
+  frontend:
+    container_name: frontend-nuitinfo
+    image: frontend-nuitinfo
+    build:
+      context: Frontend
+      dockerfile: ./Dockerfile
+      target: 'production-stage'
+    environment:
+      NODE_ENV: production
+      TZ: Europe/Paris
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+    links:
+      - backend
