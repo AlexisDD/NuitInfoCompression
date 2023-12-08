@@ -14,10 +14,10 @@ const compress = async () => {
     loading.value = true;
 
     await axios.post('/compression/compress', {
-        url: ressourceUrl.value
+        url: ressourceUrl.value,
+        ...(size.value && { size: size.value }), // Add size only if it's not empty
     }).then((res) => {
         result.value = res.data;
-        console.log(res.data);
         resultDisplay.value = true;
     }).catch((err) => {
         console.log(err);

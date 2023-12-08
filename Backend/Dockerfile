@@ -6,6 +6,9 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json
 COPY package*.json tsconfig.json ./
 
+# Install ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg
+
 # Install app dependencies
 RUN npm install
 

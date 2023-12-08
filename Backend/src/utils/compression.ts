@@ -81,11 +81,13 @@ function compressImage(filePath: string, maximumSize: number): Promise<string> {
 function compressVideo(filePath: string, maximumSize: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const fileName = filePath.split('/').pop();
-    const outputFilePath = `${outputPath}/${fileName}_compressed.av1`;
+    const outputFilePath = `${outputPath}/${fileName}_compressed.mp4`;
 
     const fileSize = fs.statSync(filePath).size;
     // We calculate a compression ratio with the maximum desired size to determine the quality of the video
     const compressionRatio = maximumSize / fileSize;
+    logger.debug(`File size: ${fileSize}`);
+    logger.debug(`Maximum size: ${maximumSize}`);
 
     let crf = 30; // Constant Rate Factor (0-63); 0 = lossless (default = 30)
     let preset = 4; // 0 (slowest and best quality) - 8 (fastest and worst quality)

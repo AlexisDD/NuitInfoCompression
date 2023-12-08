@@ -57,6 +57,6 @@ export async function compress(req: Request, res: Response) {
             width: compressedDimensions.width,
             height: compressedDimensions.height,
         },
-        compressedFormat: isImage ? 'avif' : 'av1',
+        compressedFormat: isImage ? 'avif' : 'mp4 (AV1 codec)',
     });
 }
