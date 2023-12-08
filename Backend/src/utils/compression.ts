@@ -5,6 +5,11 @@ import fs from 'fs';
 
 const outputPath = './public/images';
 
+/**
+ * Convert a string size (e.g. 10MB) to bytes
+ * @param input The string size
+ * @returns The size in bytes
+ */
 function stringToBytes(input: string): number {
     const regex = /^(\d+)([KMG]?B)$/i;
     const match = input.match(regex);
@@ -39,6 +44,10 @@ function stringToBytes(input: string): number {
 function compressImage(filePath: string, maximumSize: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const fileName = filePath.split('/').pop();
+
+    if (!fs.existsSync(outputPath)) {
+        fs.mkdirSync(outputPath);
+    }
     const outputFilePath = `${outputPath}/${fileName}_compressed.avif`;
 
     const fileSize = fs.statSync(filePath).size;
@@ -83,6 +92,10 @@ function compressImage(filePath: string, maximumSize: number): Promise<string> {
 function compressVideo(filePath: string, maximumSize: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const fileName = filePath.split('/').pop();
+    
+    if (!fs.existsSync(outputPath)) {
+        fs.mkdirSync(outputPath);
+    }
     const outputFilePath = `${outputPath}/${fileName}_compressed.mp4`;
 
     const fileSize = fs.statSync(filePath).size;
