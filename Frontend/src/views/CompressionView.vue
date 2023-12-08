@@ -58,7 +58,7 @@ const bytesToSize = (bytes: number) => {
                     <label for="size" class="block text-sm font-medium leading-6 text-gray-900">Taille maximale désirée
                         (optionnel)</label>
                     <div class="mt-2">
-                        <input v-model="size" id="size" name="size" type="text" required="true" placeholder="10MB"
+                        <input v-model="size" id="size" name="size" type="text" placeholder="10MB"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                     </div>
                 </div>
@@ -96,7 +96,7 @@ const bytesToSize = (bytes: number) => {
 
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <div class="flex flex-col items-center justify-center mt-4">
-                <img :src="ressourceUrl" width="200" height="200" />
+                <img v-if="!ressourceUrl.endsWith('.mp4')" :src="ressourceUrl" width="200" height="200" />
                 <p class="text-center text-lg mt-2">Lien du fichier compressé :</p><a :href="result.compressed"
                     target="_blank" class="underline">{{ result.compressed }}</a>
                 <p class="text-center text-lg mt-2">Taille originale : {{ bytesToSize(result.originalSize) }}</p>

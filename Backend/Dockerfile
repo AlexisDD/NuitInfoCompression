@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY package*.json tsconfig.json ./
 
 # Install ffmpeg
-RUN apt-get update && apt-get install -y ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg libffmpeg-nvenc-dev
 
 # Install app dependencies
 RUN npm install

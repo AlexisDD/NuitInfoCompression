@@ -46,15 +46,17 @@ function compressImage(filePath: string, maximumSize: number): Promise<string> {
 
     let quality = 50; // 0 (worst) - 100 (best)
     let effort = 4; // 0 (fastest) - 9 (best)
-    if (compressionRatio < 0.1) {
-        quality = 10;
-        effort = 0;
-    } else if (compressionRatio < 0.25) {
-        quality = 25;
-        effort = 2;
-    } else if (compressionRatio < 0.5) {
-        quality = 40;
-        effort = 3;
+    if (maximumSize !== 0) {
+        if (compressionRatio < 0.1) {
+            quality = 10;
+            effort = 0;
+        } else if (compressionRatio < 0.25) {
+            quality = 25;
+            effort = 2;
+        } else if (compressionRatio < 0.5) {
+            quality = 40;
+            effort = 3;
+        }
     }
 
     // Compress image to AVIF format without reducing size
@@ -87,21 +89,24 @@ function compressVideo(filePath: string, maximumSize: number): Promise<string> {
     // We calculate a compression ratio with the maximum desired size to determine the quality of the video
     const compressionRatio = maximumSize / fileSize;
     logger.debug(`File size: ${fileSize}`);
-    logger.debug(`Maximum size: ${maximumSize}`);
 
-    let crf = 30; // Constant Rate Factor (0-63); 0 = lossless (default = 30)
-    let preset = 4; // 0 (slowest and best quality) - 8 (fastest and worst quality)
-    logger.debug(`Compression ratio: ${compressionRatio}`);
-    if (compressionRatio < 0.1) {
-        crf = 60;
-        preset = 0;
-    } else if (compressionRatio < 0.25) {
-        crf = 50;
-        preset = 2;
-    } else if (compressionRatio < 0.5) {
-        crf = 40;
-        preset = 3;
-    }
+    let crf = 40; // Constant Rate Factor (0-63); 0 = lossless (default = 30)
+    let preset = 6; // 0 (slowest and best quality) - 8 (fastest and worst quality)
+
+    if (maximumSize !== 0) {
+        logger.debug(`Maximum size: ${maximumSize}`);
+        logger.debug(`Compression ratio: ${compressionRatio}`);
+        if (compressionRatio < 0.1) {
+            crf = 60;
+            preset = 8;
+        } else if (compressionRatio < 0.25) {
+            crf = 50;
+            preset = 7;
+        } else if (compressionRatio < 0.5) {
+            crf = 40;
+            preset = 7;
+        }
+    } 
 
     // Compress video to AV1 format without reducing size
     ffmpeg(filePath)
@@ -112,7 +117,7 @@ function compressVideo(filePath: string, maximumSize: number): Promise<string> {
         .output(outputFilePath)
         .on('end', () => {
             logger.debug('Video compression completed');
-            resolve(`${fileName}_compressed.av1`);
+            resolve(`${fileName}_compressed.mp4`);
         })
         .on('error', (err) => {
             logger.error('Error compressing video:', err);

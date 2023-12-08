@@ -27,6 +27,8 @@ Entrée :
 }
 ```
 
+Attention : certains liens vers des images ou vidéos ne fonctionnent pas car ils nécessitent l'acceptation des cookies et l'activation du JavaScript pour accéder à la ressource. C'est le cas du lien donné dans le sujet vers le site https://www.moselle.cci.fr.
+
 Sortie :
 ```json
 {
@@ -64,6 +66,17 @@ Pour les vidéos, nous avons utilisé [FFmpeg](https://ffmpeg.org/) qui est un l
 
 Cependant, il est assez gourmand en ressources et par conséquent, la compression peut prendre un certain temps. Pendant nos tests, la compression d'une vidéo de 110MB a pris environ 8 minutes, ce qui aurait pu être amélioré avec un peu plus de temps.
 
+#### Choix de la taille maximale
+
+L'API permet de spécifier la taille maximale désirée pour la compression. Cependant, il est difficile de déterminer la taille finale de la vidéo compressée à l'avance. Nous avons donc choisi de calculer un ratio de compression à partir de la taille de la vidéo originale et de la taille maximale désirée. Ce ratio sert ensuite à controler les paramètres de qualité des librairies de compression.
+
+Par exemple, si la taille maximale désirée est de 10MB et que la vidéo originale fait 100MB, le ratio de compression sera de 0.1. Cela signifie que la vidéo compressée devra faire 10% de la taille de la vidéo originale. 
+
+## Interface utilisateur
+
+Dans le composant Front, vous retrouverez le code de l'interface utilisateur dans le dossier `src/views/CompressionView.vue`.
+La page est accessible à l'adresse `/compression` du composant Front et communique avec l'API de compression du composant Backend.
+
 ## Installation
 
 ### Docker
@@ -88,3 +101,32 @@ Ensuite, l'application est automatiquement déployée sur les ports suivants:
 * **Front** : http://localhost/
 * **Backend** : http://localhost:3000/
 
+
+### Manuellement
+
+Si vous ne souhaitez pas utiliser Docker, vous pouvez installer les composants manuellement. L'installation manuelle est plus longue mais permet d'utiliser les ressources GPU de la machine hôte pour la compression des vidéos.
+
+1. Installer [Node.js](https://nodejs.org/en/)
+2. Installer [FFmpeg](https://ffmpeg.org/)
+3. Installer les dépendances du composant Backend :
+    ```bash
+    cd backend
+    npm install
+    ```
+4. Installer les dépendances du composant Front :
+    ```bash
+    cd frontend
+    npm install
+    ```
+5. Lancer le composant Backend :
+    ```bash
+    cd backend
+    npm run start
+    ```
+6. Lancer le composant Front :
+    ```bash
+    cd frontend
+    npm run serve
+    ```
+
+Ensuite, l'application est accessible à l'adresse http://localhost/.

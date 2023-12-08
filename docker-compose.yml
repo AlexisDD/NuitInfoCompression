@@ -28,6 +28,17 @@ services:
       - mongo
     links:
       - mongo
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+                - utility
+                - compute
+                - video
 
   frontend:
     container_name: frontend-nuitinfo

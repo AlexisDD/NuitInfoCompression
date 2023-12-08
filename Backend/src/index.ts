@@ -8,6 +8,9 @@ const port = process.env.PORT || 8080;
 
 logger.info("Starting server...");
 
+
+// Connexion à la base de données retirée pour le défi Compression
+
 // Start the app only if we can connect to the database
 /*connectToDatabase().then((result: boolean) => {
     if (!result) {
