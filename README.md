@@ -2,7 +2,7 @@
 
 L'objectif de ce défi est de creér une API REST permettant de compresser des images et des vidéos. 
 
-Nous avons intégré cette API dans notre application web pour le défi principal de la nuit de l'info, certains composants ne concernent donc pas ce défi (MongoDB, Authentification, etc.).
+Nous avons intégré cette API dans notre application web pour le défi principal de la nuit de l'info, certains composants ne concernent donc pas ce défi (MongoDB, Authentification, etc.). Une version en ligne de l'application est disponible à l'adresse suivante : http://nuitinfo.alexisdesaintdenis.fr:8081/.
 
 ## Composants
 
